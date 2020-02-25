@@ -1,0 +1,6 @@
+window_application:
+  - fr.hygram.demo.WindowApplicationDemo 1.0
+background_application:
+  - fr.hygram.demo.BackgroundApplicationDemo 1.0
+request_addon:
+  - fr.hygram.demo.RemoteRequestDemo
