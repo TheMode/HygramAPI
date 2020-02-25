@@ -1,6 +1,5 @@
+# To put in resources folder, it is loaded at startup
 window_application:
-  - fr.hygram.demo.WindowApplicationDemo 1.0
+  - fr.hygram.demo.WindowApplicationDemo DemoWindow 1.0
 background_application:
-  - fr.hygram.demo.BackgroundApplicationDemo 1.0
-request_addon:
-  - fr.hygram.demo.RemoteRequestDemo
+  - fr.hygram.demo.BackgroundApplicationDemo DemoBackground 1.0
