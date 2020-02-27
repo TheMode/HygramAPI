@@ -24,4 +24,6 @@ public interface Window extends WindowModifier {
 
     boolean isFocused();
 
+    void close();
+
 }

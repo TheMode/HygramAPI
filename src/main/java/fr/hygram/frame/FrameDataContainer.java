@@ -4,8 +4,12 @@ import fr.hygram.utils.Bitmap;
 
 public interface FrameDataContainer {
 
-    void loadTexture(String textureIdentifier, String texturePath);
+    void loadTexture(String identifier, String texturePath);
 
-    void loadBitmap(String bitmapIdentifier, Bitmap bitmap);
+    void loadBitmap(String identifier, Bitmap bitmap);
+
+    FrameBuffer createFrameBuffer(float x, float y, float width, float height);
+
+    void generateQuadSprite(String identifier, String textureIdentifier, float width, float height);
 
 }

@@ -9,7 +9,7 @@ public class WindowManagerApplicationDemo extends HygramWindowManagerApplication
     private WindowManager windowManager = getWindowManager();
 
     @Override
-    public void onLaunch(Object... args) {
+    public void onApplicationLaunch(Object... args) {
 
     }
 

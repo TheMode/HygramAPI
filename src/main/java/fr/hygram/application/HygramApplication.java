@@ -1,14 +1,16 @@
 package fr.hygram.application;
 
 import fr.hygram.Server;
+import fr.hygram.listener.ListenerManager;
 import fr.hygram.window.WindowManager;
 
 public abstract class HygramApplication {
 
     private Server server;
     private WindowManager windowManager;
+    private ListenerManager listenerManager = new ListenerManager();
 
-    public abstract void onLaunch(Object... args);
+    public abstract void onApplicationLaunch(Object... args);
 
     public Server getServer() {
         return server;
@@ -24,5 +26,9 @@ public abstract class HygramApplication {
 
     protected void setWindowManager(WindowManager windowManager) {
         this.windowManager = windowManager;
+    }
+
+    public ListenerManager getListenerManager() {
+        return listenerManager;
     }
 }

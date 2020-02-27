@@ -2,13 +2,13 @@ package fr.hygram.demo;
 
 import fr.hygram.Server;
 import fr.hygram.application.HygramWindowApplication;
-import fr.hygram.client.Client;
-import fr.hygram.client.Guest;
-import fr.hygram.client.User;
 import fr.hygram.frame.FrameBuffer;
 import fr.hygram.frame.FrameDataContainer;
 import fr.hygram.frame.RenderingManager;
-import fr.hygram.screen.ClientDevice;
+import fr.hygram.listener.GuestJoinListener;
+import fr.hygram.screen.UserDevice;
+import fr.hygram.user.User;
+import fr.hygram.user.guest.Guest;
 import fr.hygram.window.WindowInitializer;
 
 import java.util.Set;
@@ -20,21 +20,27 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
     // use dataContainer for storing textures/shaders/etc...
     private FrameDataContainer frameDataContainer = renderingManager.createFrameDataContainer();
+    private FrameBuffer frameBuffer = frameDataContainer.createFrameBuffer(0, 0, 1, 1);
 
     {
-        frameDataContainer.loadTexture("player", "player.png");
+        frameDataContainer.loadTexture("player_texture", "player.png");
+        frameDataContainer.generateQuadSprite("player_sprite", "player_texture", 0.1f, 0.1f);
     }
 
     @Override
-    public void onLaunch(Object... args) {
+    public void onApplicationLaunch(Object... args) {
+        getGuestManager().createJoinCode("join_demo");
 
+        getListenerManager().setEventListener(GuestJoinListener.class, (guest, code) -> {
+            System.out.println("A new guest joined using the code: " + code);
+        });
     }
 
     @Override
-    public void initialization(Client client, WindowInitializer windowInitializer) {
-        ClientDevice clientDevice = client.getClientDevice();
-        int width = clientDevice.getScreenWidth();
-        int height = clientDevice.getScreenHeight();
+    public void initialization(User user, WindowInitializer windowInitializer) {
+        UserDevice userDevice = user.getUserDevice();
+        int width = userDevice.getScreenWidth();
+        int height = userDevice.getScreenHeight();
 
         windowInitializer.setSize(width, height);
         windowInitializer.setResizable(true);
@@ -42,18 +48,15 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
     @Override
     public void frame(User user, Set<Guest> guests) {
-        FrameBuffer frameBuffer = renderingManager.createFrameBuffer(frameDataContainer);
 
-        // TODO graphics api
+        frameBuffer.drawQuadSprite("player_sprite", 0.5f, 0, 0.5f);
 
-        // Client and guests will all have the same screen content
+        // Users will all have the same screen content
         // setNextFrame can be ignored or set to null to do not refresh target window
         user.setNextFrame(frameBuffer);
         guests.forEach(guest -> guest.setNextFrame(frameBuffer));
-    }
 
-    @Override
-    public String getName() {
-        return "My application";
+        // Clear all registered call for next rendering phase
+        frameBuffer.clearCalls();
     }
 }

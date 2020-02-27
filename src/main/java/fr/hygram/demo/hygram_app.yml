@@ -1,4 +1,4 @@
-# To put in resources folder, it is loaded at startup
+# To put in resources folder, it is loaded during startup
 window_application:
   - fr.hygram.demo.WindowApplicationDemo DemoWindow 1.0
 background_application:
