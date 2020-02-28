@@ -6,7 +6,8 @@ import fr.hygram.frame.FrameBuffer;
 import fr.hygram.frame.FrameDataContainer;
 import fr.hygram.frame.RenderingManager;
 import fr.hygram.listener.GuestJoinListener;
-import fr.hygram.screen.UserDevice;
+import fr.hygram.screen.ClientDevice;
+import fr.hygram.user.Client;
 import fr.hygram.user.User;
 import fr.hygram.user.guest.Guest;
 import fr.hygram.window.WindowInitializer;
@@ -37,10 +38,10 @@ public class WindowApplicationDemo extends HygramWindowApplication {
     }
 
     @Override
-    public void initialization(User user, WindowInitializer windowInitializer) {
-        UserDevice userDevice = user.getUserDevice();
-        int width = userDevice.getScreenWidth();
-        int height = userDevice.getScreenHeight();
+    public void initialization(Client client, WindowInitializer windowInitializer) {
+        ClientDevice clientDevice = client.getClientDevice();
+        int width = clientDevice.getScreenWidth();
+        int height = clientDevice.getScreenHeight();
 
         windowInitializer.setSize(width, height);
         windowInitializer.setResizable(true);
@@ -48,7 +49,6 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
     @Override
     public void frame(User user, Set<Guest> guests) {
-
         frameBuffer.drawQuadSprite("player_sprite", 0.5f, 0, 0.5f);
 
         // Users will all have the same screen content

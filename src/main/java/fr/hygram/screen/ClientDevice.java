@@ -1,6 +1,6 @@
 package fr.hygram.screen;
 
-public interface UserDevice {
+public interface ClientDevice {
 
     int getScreenWidth();
 

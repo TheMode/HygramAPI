@@ -5,7 +5,7 @@ graphical with the GPU or CPU for generic applications while keeping only one co
 # How does it work
 Hygram works by being connected to a server during the whole use, a server which can be hosted by yourself.
 
-After developing your window application, you have tree ways of launching it:
+After developing your window application, you have three ways of launching it:
 * Local mode
 * Remote mode
 * Stream mode

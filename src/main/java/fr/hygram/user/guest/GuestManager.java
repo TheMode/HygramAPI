@@ -10,4 +10,6 @@ public interface GuestManager {
 
     void createUniqueJoinCode(String uniqueCode);
 
+    void revokeJoinCode(String code);
+
 }

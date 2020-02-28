@@ -1,8 +1,8 @@
 package fr.hygram.user.guest;
 
-import fr.hygram.user.User;
+import fr.hygram.user.Client;
 
-public interface Guest extends User {
+public interface Guest extends Client {
 
     default boolean isLocal() {
         return false;

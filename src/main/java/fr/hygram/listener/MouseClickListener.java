@@ -1,9 +1,9 @@
 package fr.hygram.listener;
 
-import fr.hygram.user.User;
+import fr.hygram.user.Client;
 
 public interface MouseClickListener extends Listener {
 
-    void mouseClick(User user, int button, int action);
+    void mouseClick(Client client, int button, int action);
 
 }

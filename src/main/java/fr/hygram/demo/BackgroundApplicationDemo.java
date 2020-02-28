@@ -10,7 +10,7 @@ public class BackgroundApplicationDemo extends HygramBackgroundApplication {
     public void onApplicationLaunch(Object... args) {
         ListenerManager listenerManager = getListenerManager();
 
-        listenerManager.setEventListener(MousePositionListener.class, (user, newX, newY) -> {
+        listenerManager.setEventListener(MousePositionListener.class, (client, newX, newY) -> {
             System.out.println("Mouse moved to " + newX + " : " + newY);
         });
     }
