@@ -1,17 +1,45 @@
 package fr.hygram.screen;
 
-public interface ClientDevice {
+public class ClientDevice {
 
-    int getScreenWidth();
+    private int screenWidth, screenHeight;
+    private int physicalScreenWidth, physicalScreenHeight;
 
-    int getScreenHeight();
+    private DeviceType deviceType;
+    private DeviceOrientation deviceOrientation;
 
-    int getPhysicalScreenWidth();
+    public ClientDevice(int screenWidth, int screenHeight,
+                        int physicalScreenWidth, int physicalScreenHeight,
+                        DeviceType deviceType, DeviceOrientation deviceOrientation) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.physicalScreenWidth = physicalScreenWidth;
+        this.physicalScreenHeight = physicalScreenHeight;
+        this.deviceType = deviceType;
+        this.deviceOrientation = deviceOrientation;
+    }
 
-    int getPhysicalScreenHeight();
+    public int getScreenWidth() {
+        return screenWidth;
+    }
 
-    DeviceType getDeviceType();
+    public int getScreenHeight() {
+        return screenHeight;
+    }
 
-    DeviceOrientation getDeviceOrientation();
+    public int getPhysicalScreenWidth() {
+        return physicalScreenWidth;
+    }
 
+    public int getPhysicalScreenHeight() {
+        return physicalScreenHeight;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public DeviceOrientation getDeviceOrientation() {
+        return deviceOrientation;
+    }
 }
