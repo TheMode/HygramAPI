@@ -5,10 +5,10 @@ import fr.hygram.user.User;
 
 import java.util.Set;
 
-public abstract class Server {
+public interface Server {
 
-    public abstract Set<User> getUsers();
+    Set<User> getUsers();
 
-    public abstract HygramApplication launchApplication(String applicationName, Object... args);
+    HygramApplication launchApplication(String applicationName, Object... args);
 
 }

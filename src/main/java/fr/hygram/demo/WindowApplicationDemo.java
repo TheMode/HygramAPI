@@ -1,6 +1,5 @@
 package fr.hygram.demo;
 
-import fr.hygram.Server;
 import fr.hygram.application.HygramWindowApplication;
 import fr.hygram.frame.FrameBuffer;
 import fr.hygram.frame.FrameDataContainer;
@@ -8,15 +7,10 @@ import fr.hygram.frame.RenderingManager;
 import fr.hygram.listener.GuestJoinListener;
 import fr.hygram.screen.ClientDevice;
 import fr.hygram.user.Client;
-import fr.hygram.user.User;
-import fr.hygram.user.guest.Guest;
 import fr.hygram.window.WindowInitializer;
-
-import java.util.Set;
 
 public class WindowApplicationDemo extends HygramWindowApplication {
 
-    private Server server = getServer();
     private RenderingManager renderingManager = getRenderingManager();
 
     // use dataContainer for storing textures/shaders/etc...
@@ -30,16 +24,15 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
     @Override
     public void onApplicationLaunch(Object... args) {
-        getGuestManager().createJoinCode("join_demo");
+        getGuestManager().createJoinCode(this, "join_demo");
 
-        getListenerManager().setEventListener(GuestJoinListener.class, (guest, code) -> {
+        getListenerManager().setEventListener(GuestJoinListener.class, (guest, window, code) -> {
             System.out.println("A new guest joined using the code: " + code);
         });
     }
 
     @Override
-    public void initialization(Client client, WindowInitializer windowInitializer) {
-        ClientDevice clientDevice = client.getClientDevice();
+    public void initialization(Client client, ClientDevice clientDevice, WindowInitializer windowInitializer) {
         int width = clientDevice.getScreenWidth();
         int height = clientDevice.getScreenHeight();
 
@@ -48,15 +41,12 @@ public class WindowApplicationDemo extends HygramWindowApplication {
     }
 
     @Override
-    public void frame(User user, Set<Guest> guests) {
+    public FrameBuffer frame(Client client, ClientDevice clientDevice) {
+        // Clear all registered call from the previous rendering phase
+        frameBuffer.clearCalls();
+
         frameBuffer.drawQuadSprite("player_sprite", 0.5f, 0, 0.5f);
 
-        // Users will all have the same screen content
-        // setNextFrame can be ignored or set to null to do not refresh target window
-        user.setNextFrame(frameBuffer);
-        guests.forEach(guest -> guest.setNextFrame(frameBuffer));
-
-        // Clear all registered call for next rendering phase
-        frameBuffer.clearCalls();
+        return frameBuffer;
     }
 }
