@@ -13,15 +13,6 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
     private RenderingManager renderingManager = getRenderingManager();
 
-    // use dataContainer for storing textures/shaders/etc...
-    private FrameDataContainer frameDataContainer = renderingManager.createFrameDataContainer();
-    private FrameBuffer frameBuffer = frameDataContainer.createFrameBuffer(0, 0, 1, 1);
-
-    {
-        frameDataContainer.loadTexture("player_texture", "player.png");
-        frameDataContainer.generateQuadSprite("player_sprite", "player_texture", 0.1f, 0.1f);
-    }
-
     @Override
     public void onApplicationLaunch(Object... args) {
         getGuestManager().createJoinCode(this, "join_demo");
@@ -38,10 +29,14 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
         windowInitializer.setSize(width, height);
         windowInitializer.setResizable(true);
+
+        FrameDataContainer frameDataContainer = renderingManager.createFrameDataContainer();
+        frameDataContainer.loadTexture("player_texture", "player.png");
+        frameDataContainer.generateQuadSprite("player_sprite", "player_texture", 0.1f, 0.1f);
     }
 
     @Override
-    public FrameBuffer frame(Client client, ClientDevice clientDevice) {
+    public FrameBuffer frame(Client client, ClientDevice clientDevice, FrameBuffer frameBuffer) {
         // Clear all registered call from the previous rendering phase
         frameBuffer.clearCalls();
 

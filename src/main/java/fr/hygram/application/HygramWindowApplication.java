@@ -12,7 +12,7 @@ public abstract class HygramWindowApplication extends HygramApplication {
 
     abstract public void initialization(Client client, ClientDevice clientDevice, WindowInitializer windowInitializer);
 
-    abstract public FrameBuffer frame(Client client, ClientDevice clientDevice);
+    abstract public FrameBuffer frame(Client client, ClientDevice clientDevice, FrameBuffer frameBuffer);
 
     public RenderingManager getRenderingManager() {
         return Hygram.getRenderingManager();
