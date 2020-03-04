@@ -1,23 +1,18 @@
 package fr.hygram.user;
 
-import fr.hygram.frame.FrameBuffer;
-import fr.hygram.frame.FrameDataContainer;
 import fr.hygram.window.Window;
 
 import java.util.Set;
+import java.util.UUID;
 
 public interface Client {
 
-    boolean isLocal();
+    boolean isGuest();
 
     void println(String text);
 
     Set<Window> getOpenWindows();
 
-    FrameDataContainer getAttachedFrameDataContainer();
-
-    void attachFrameDataContainer(FrameDataContainer frameDataContainer);
-
-    FrameBuffer getLastFrameBuffer();
+    UUID getUniqueId();
 
 }

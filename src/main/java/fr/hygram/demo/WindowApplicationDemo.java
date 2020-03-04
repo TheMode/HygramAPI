@@ -1,17 +1,22 @@
 package fr.hygram.demo;
 
 import fr.hygram.application.HygramWindowApplication;
-import fr.hygram.frame.FrameBuffer;
-import fr.hygram.frame.FrameDataContainer;
+import fr.hygram.frame.FrameContainer;
 import fr.hygram.frame.RenderingManager;
 import fr.hygram.listener.GuestJoinListener;
 import fr.hygram.screen.ClientDevice;
-import fr.hygram.user.Client;
+import fr.hygram.timer.TaskRunnable;
+import fr.hygram.user.RenderingClient;
 import fr.hygram.window.WindowInitializer;
 
 public class WindowApplicationDemo extends HygramWindowApplication {
 
     private RenderingManager renderingManager = getRenderingManager();
+    private FrameContainer generalDataContainer = renderingManager.createFrameDataContainer();
+
+    {
+        generalDataContainer.loadTexture("player_texture", "player.png");
+    }
 
     @Override
     public void onApplicationLaunch(Object... args) {
@@ -19,29 +24,38 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
         getListenerManager().setEventListener(GuestJoinListener.class, (guest, window, code) -> {
             System.out.println("A new guest joined using the code: " + code);
+            if (window == this) {
+
+            }
         });
+
+        getTimerManager().addRepeatingTask(new TaskRunnable() {
+            @Override
+            public void run() {
+                System.out.println("test");
+            }
+        }, 50);
     }
 
     @Override
-    public void initialization(Client client, ClientDevice clientDevice, WindowInitializer windowInitializer) {
+    public void initialization(RenderingClient client, ClientDevice clientDevice, WindowInitializer windowInitializer) {
         int width = clientDevice.getScreenWidth();
         int height = clientDevice.getScreenHeight();
 
         windowInitializer.setSize(width, height);
         windowInitializer.setResizable(true);
 
-        FrameDataContainer frameDataContainer = renderingManager.createFrameDataContainer();
-        frameDataContainer.loadTexture("player_texture", "player.png");
-        frameDataContainer.generateQuadSprite("player_sprite", "player_texture", 0.1f, 0.1f);
-    }
+        FrameContainer frameContainer = renderingManager.createFrameDataContainer();
+        frameContainer.addExternalContainer(generalDataContainer);
 
-    @Override
-    public FrameBuffer frame(Client client, ClientDevice clientDevice, FrameBuffer frameBuffer) {
-        // Clear all registered call from the previous rendering phase
-        frameBuffer.clearCalls();
+        // RenderingClient#attachFrameDataContainer does send all needed files to the client
+        // They are dynamically updated
+        client.attachFrameDataContainer(frameContainer);
 
-        frameBuffer.drawQuadSprite("player_sprite", 0.5f, 0, 0.5f);
+        String identifier = "player_sprite" + client.getUniqueId();
 
-        return frameBuffer;
+        generalDataContainer.generateQuadSprite(identifier, "player_texture", 0.1f, 0.1f);
+
+        generalDataContainer.showQuadSprite(identifier, 0.5f, 0, 0.5f);
     }
 }

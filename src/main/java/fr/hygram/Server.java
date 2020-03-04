@@ -1,13 +1,13 @@
 package fr.hygram;
 
 import fr.hygram.application.HygramApplication;
-import fr.hygram.user.User;
+import fr.hygram.user.Client;
 
 import java.util.Set;
 
 public interface Server {
 
-    Set<User> getUsers();
+    Set<Client> getLocalClients();
 
     HygramApplication launchApplication(String applicationName, Object... args);
 

@@ -1,12 +1,13 @@
 package fr.hygram.user.guest;
 
 import fr.hygram.application.HygramWindowApplication;
+import fr.hygram.user.RenderingClient;
 
 import java.util.Set;
 
 public interface GuestManager {
 
-    Set<Guest> getGuests();
+    Set<RenderingClient> getGuests(HygramWindowApplication windowApplication);
 
     void createJoinCode(HygramWindowApplication windowApplication, String code);
 
