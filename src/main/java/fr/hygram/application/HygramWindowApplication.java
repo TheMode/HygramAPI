@@ -9,7 +9,9 @@ import fr.hygram.window.WindowInitializer;
 
 public abstract class HygramWindowApplication extends HygramApplication {
 
-    abstract public void initialization(RenderingClient client, ClientDevice clientDevice, WindowInitializer windowInitializer);
+    public abstract void initialization(RenderingClient client, ClientDevice clientDevice, WindowInitializer windowInitializer);
+
+    public abstract boolean isDeviceSupported(ClientDevice clientDevice);
 
     public RenderingManager getRenderingManager() {
         return Hygram.getRenderingManager();

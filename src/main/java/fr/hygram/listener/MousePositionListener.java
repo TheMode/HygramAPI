@@ -4,6 +4,6 @@ import fr.hygram.user.Client;
 
 public interface MousePositionListener extends Listener {
 
-    void mouseMove(Client client, int newX, int newY);
+    void mouseMove(Client client, float newX, float newY);
 
 }

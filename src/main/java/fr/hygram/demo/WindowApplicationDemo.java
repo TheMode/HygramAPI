@@ -4,8 +4,12 @@ import fr.hygram.application.HygramWindowApplication;
 import fr.hygram.frame.FrameContainer;
 import fr.hygram.frame.RenderingManager;
 import fr.hygram.listener.GuestJoinListener;
+import fr.hygram.listener.ListenerManager;
+import fr.hygram.listener.MousePositionListener;
 import fr.hygram.screen.ClientDevice;
+import fr.hygram.screen.DeviceType;
 import fr.hygram.timer.TaskRunnable;
+import fr.hygram.user.Client;
 import fr.hygram.user.RenderingClient;
 import fr.hygram.window.WindowInitializer;
 
@@ -22,11 +26,15 @@ public class WindowApplicationDemo extends HygramWindowApplication {
     public void onApplicationLaunch(Object... args) {
         getGuestManager().createJoinCode(this, "join_demo");
 
-        getListenerManager().setEventListener(GuestJoinListener.class, (guest, window, code) -> {
-            System.out.println("A new guest joined using the code: " + code);
-            if (window == this) {
+        ListenerManager listenerManager = getListenerManager();
 
-            }
+        listenerManager.setEventListener(GuestJoinListener.class, (guest, window, code) -> {
+            System.out.println("A new guest joined using the code: " + code);
+        });
+
+        listenerManager.setEventListener(MousePositionListener.class, (client, newX, newY) -> {
+            String identifier = getPlayerIdentifier(client);
+            generalDataContainer.refreshQuadSpriteTransformation(identifier, newX, newY, 0);
         });
 
         getTimerManager().addRepeatingTask(new TaskRunnable() {
@@ -52,10 +60,19 @@ public class WindowApplicationDemo extends HygramWindowApplication {
         // They are dynamically updated
         client.attachFrameDataContainer(frameContainer);
 
-        String identifier = "player_sprite" + client.getUniqueId();
+        String identifier = getPlayerIdentifier(client);
 
-        generalDataContainer.generateQuadSprite(identifier, "player_texture", 0.1f, 0.1f);
+        generalDataContainer.loadQuadSprite(identifier, "player_texture", 0.1f);
 
-        generalDataContainer.showQuadSprite(identifier, 0.5f, 0, 0.5f);
+        generalDataContainer.showQuadSprite(identifier);
+    }
+
+    @Override
+    public boolean isDeviceSupported(ClientDevice clientDevice) {
+        return clientDevice.getDeviceType().equals(DeviceType.DESKTOP);
+    }
+
+    private String getPlayerIdentifier(Client client) {
+        return "player_" + client.getUniqueId();
     }
 }

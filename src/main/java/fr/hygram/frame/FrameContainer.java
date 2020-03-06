@@ -12,23 +12,27 @@ public interface FrameContainer {
 
     void loadBitmap(String identifier, Bitmap bitmap);
 
-    void generateQuadSprite(String identifier, String textureIdentifier, float width, float height);
+    void loadQuadSprite(String identifier, String textureIdentifier, float size);
 
     Set<String> getSpriteIdentifiers();
 
     // Draw calls
-    void showQuadSprite(String identifier, float x, float y, float z, float angle, float scaleX, float scaleY);
+    void showQuadSprite(String identifier);
 
-    default void showQuadSprite(String identifier, float x, float y, float z, float angle) {
-        showQuadSprite(identifier, x, y, z, angle, 1, 1);
+    void refreshQuadSpriteTransformation(String identifier, float x, float y, float z, float angle, float scaleX, float scaleY);
+
+    default void refreshQuadSpriteTransformation(String identifier, float x, float y, float z, float angle) {
+        refreshQuadSpriteTransformation(identifier, x, y, z, angle, 1, 1);
     }
 
-    default void showQuadSprite(String identifier, float x, float y, float z) {
-        showQuadSprite(identifier, x, y, z, 0);
+    default void refreshQuadSpriteTransformation(String identifier, float x, float y, float z) {
+        refreshQuadSpriteTransformation(identifier, x, y, z, 0);
     }
 
-    void drawInstancedQuadSprite(String identifier, float[] transformation);
+    void drawInstancedQuadSprite(String identifier, int count, float[] transformations);
 
-    void clearCalls();
+    void hideQuadSprite(String identifier);
+
+    void unloadQuadSprite(String identifier);
 
 }
