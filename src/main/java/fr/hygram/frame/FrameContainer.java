@@ -12,9 +12,11 @@ public interface FrameContainer {
 
     void loadBitmap(String identifier, Bitmap bitmap);
 
-    void loadQuadSprite(String identifier, String textureIdentifier, float size);
-
     Set<String> getSpriteIdentifiers();
+
+    void createQuadSprite(String identifier, String textureIdentifier, float size);
+
+    void deleteQuadSprite(String identifier);
 
     // Draw calls
     void showQuadSprite(String identifier);
@@ -32,7 +34,5 @@ public interface FrameContainer {
     void drawInstancedQuadSprite(String identifier, int count, float[] transformations);
 
     void hideQuadSprite(String identifier);
-
-    void unloadQuadSprite(String identifier);
 
 }

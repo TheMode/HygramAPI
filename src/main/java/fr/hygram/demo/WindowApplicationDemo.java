@@ -62,7 +62,7 @@ public class WindowApplicationDemo extends HygramWindowApplication {
 
         String identifier = getPlayerIdentifier(client);
 
-        generalDataContainer.loadQuadSprite(identifier, "player_texture", 0.1f);
+        generalDataContainer.createQuadSprite(identifier, "player_texture", 0.1f);
 
         generalDataContainer.showQuadSprite(identifier);
     }
